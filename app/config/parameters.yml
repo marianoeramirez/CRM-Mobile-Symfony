@@ -1,0 +1,14 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: null
+    database_name: nonvulgi
+    database_user: root
+    database_password: minina1990
+    mailer_transport: smtp
+    mailer_host: localhost
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: 0a46f98ff1703104a0685fe7f4407a05519b545e
+    database_path: null

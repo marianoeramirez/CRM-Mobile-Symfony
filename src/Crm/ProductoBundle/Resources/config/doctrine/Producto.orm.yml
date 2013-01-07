@@ -1,0 +1,32 @@
+Crm\ProductoBundle\Entity\Producto:
+    type: entity
+    table: producto
+    repositoryClass: Crm\ProductoBundle\Entity\ProductoRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        codigo:
+            type: string
+            length: '40'
+        nombre:
+            type: string
+            length: '60'
+        precio:
+            type: float
+        descripcion:
+            type: text
+            nullable: true
+        laboratorio:
+            type: string
+            length: '3'
+        regulado:
+            type: boolean
+    oneToMany:
+        lineas:
+            targetEntity: Linea
+            mappedBy: producto
+            cascade: ["persist", "merge"]
+    lifecycleCallbacks: {  }

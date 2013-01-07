@@ -1,0 +1,30 @@
+pedido:
+    pattern:  /
+    defaults: { _controller: "CrmProductoBundle:Pedido:index" }
+
+pedido_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "CrmProductoBundle:Pedido:show" }
+
+pedido_new:
+    pattern:  /new
+    defaults: { _controller: "CrmProductoBundle:Pedido:new" }
+
+pedido_create:
+    pattern:  /create
+    defaults: { _controller: "CrmProductoBundle:Pedido:create" }
+    requirements: { _method: post }
+
+pedido_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "CrmProductoBundle:Pedido:edit" }
+
+pedido_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "CrmProductoBundle:Pedido:update" }
+    requirements: { _method: post }
+
+pedido_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "CrmProductoBundle:Pedido:delete" }
+    requirements: { _method: post }

@@ -1,0 +1,157 @@
+{% extends '::movil.html.twig' %}
+{% block header %}
+<h1>Editar Pedido</h1>
+<a href="{{ path('pedido') }}" data-role="button" data-icon="back" class="ui-btn-right" data-iconpos="notext"></a>
+{% endblock %}
+{% block page_id %}pedido{% endblock %}
+{% block content %}
+
+<form action="{{ path('pedido_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+	<div data-role="fieldcontain">
+	    {{ form_widget(edit_form) }}
+	</div>
+	<br />
+	<ul  data-role="listview" id="listsel">
+	</ul>
+	<br />
+    <a data-icon="plus" id="btn-add" data-role="button" >Añadir Producto</a>
+    <div class="ui-body ui-body-c ui-corner-all">
+    Total: <span id="formtotal">0</span> Bs.
+    </div>
+    <p>
+        <button type="submit">Guardar</button>
+    </p>
+</form>
+<form action="{{ path('pedido_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Eliminar</button>
+        </form>
+{% endblock %}
+{% block extra %}
+<div data-role="page" id="linea">
+<div data-role="content">
+		<label for="producto">Producto: </label>
+		<select name="producto" id="producto">
+		{% for p in productos %}
+		<option value="{{p.id}}">{{p.codigo}}: {{ p.nombre }}</option>
+		{% endfor %}
+		</select>
+		
+		<label for="cantidad">Cantidad:</label>
+		<input name="cantidad" id="cantidad" type="number" value="1" min="1">
+		<p>Precio: <span id="precio">0</span> Bs.</p>
+		<p>Total: <span id="total">0</span> Bs.</p>
+		<div class="ui-body ui-body-b">
+		<fieldset class="ui-grid-a">
+				<div class="ui-block-a"><a data-role="button" id="btn-save" data-theme="a">Guardar</a></div>
+				<div class="ui-block-b"><a data-role="button" id="btn-cancel" data-theme="d">Cancelar</a></div>
+	    </fieldset>
+		</div>
+</div>
+</div>
+{% endblock %}
+{% block javascripts_e %}
+var productos = {{ productos|json_encode|raw }};
+var modid=false;
+function calculo(){
+	var le =$('#crm_productobundle_pedidotype_lineas').children().length -1;
+	var total = 0;
+	for(var i = 0; i <= le; i++){
+		var c = parseInt($('#crm_productobundle_pedidotype_lineas_'+i+'_cantidad').val());
+    	var p = parseInt($('#crm_productobundle_pedidotype_lineas_'+i+'_producto').val());
+    	total += c * productos[p]['precio'];
+	}
+	
+	$('#formtotal').text(total);
+}
+function start(){
+	var le =$('#crm_productobundle_pedidotype_lineas').children().length -1;
+	for(var id = 0; id <= le; id++){
+		var idp = parseInt($('#crm_productobundle_pedidotype_lineas_'+id+'_producto').val())
+		var cantidad = parseInt($('#crm_productobundle_pedidotype_lineas_'+id+'_cantidad').val());
+		$('#listsel').append('<li><a href="#" data-id="'+id+'" class="lineas ui-link-inherit"><h3 >'+productos[idp]['codigo']+':'+productos[idp]['nombre']+'</h3><p >'+productos[idp]['precio']+' x '+cantidad+' = '+cantidad*productos[idp]['precio']+' BS</p></a><a href="#" data-icon="delete" class="btn-remove" data-id="'+id+'" >eliminar</a></li>').listview('refresh');
+	}
+	calculo();
+}
+function free(){
+	$('#precio').text(0);
+	$('#total').text(0);
+	$('#cantidad').val(1);
+}
+jQuery(document).ready(function() {
+	start();
+$('#cantidad').live('change',function(){
+	var id = parseInt($('#producto').val());
+	var cantidad = parseInt($('#cantidad').val());
+	$('#total').text(productos[id]['precio']*cantidad);
+});
+$('#producto').change(function(){
+	var id = $(this).val();
+	$('#precio').text(productos[id]['precio']);
+	$('#cantidad').change();
+});
+$('#producto').change();
+$('#btn-save').click(function(e){
+	$.mobile.changePage($('#pedido'), {changeHash:false, transition: 'fade',});
+	var collectionHolder = $('#crm_productobundle_pedidotype_lineas');
+	var id=collectionHolder.children().length;
+	var idp = $('#producto').val();
+    var prototype = collectionHolder.attr('data-prototype');
+    var form = prototype.replace(/__name__/g, id);
+		var cantidad = parseInt($('#cantidad').val());
+	if(modid === false){
+		collectionHolder.append(form).trigger( "create" );
+		$('#crm_productobundle_pedidotype_lineas_'+id+'_cantidad').val($('#cantidad').val());
+		var se = $('#crm_productobundle_pedidotype_lineas_'+id+'_producto');
+		se[0].selectedIndex = parseInt($('#producto')[0].selectedIndex);
+		//se.selectmenu("refresh");
+		$('#listsel').append('<li><a href="#" data-id="'+id+'" class="lineas ui-link-inherit"><h3 >'+productos[idp]['codigo']+':'+productos[idp]['nombre']+'</h3><p >'+productos[idp]['precio']+' x '+$('#cantidad').val()+' = '+cantidad*productos[idp]['precio']+' BS</p></a><a href="#" data-icon="delete" class="btn-remove" data-id="'+id+'" >eliminar</a></li>').listview('refresh');
+	}else{
+		
+		$('#crm_productobundle_pedidotype_lineas_'+modid+'_cantidad').val($('#cantidad').val());
+		var se = $('#crm_productobundle_pedidotype_lineas_'+modid+'_producto');
+		se[0].selectedIndex = parseInt($('#producto')[0].selectedIndex);
+		//se.selectmenu("refresh");
+		$('#listsel a[data-id="'+modid+'"]:first').html('<h3 class="ui-li-heading">'+productos[idp]['codigo']+':'+productos[idp]['nombre']+'</h3><p class="ui-li-desc">'+productos[idp]['precio']+' x '+$('#cantidad').val()+' = '+cantidad*productos[idp]['precio']+' BS</p>');
+		modid=false;
+	}
+	modid=false;
+	free();
+	calculo();
+	
+});
+$('.lineas').live('click',function(){
+	$.mobile.changePage($('#linea'), {changeHash:false, transition: 'fade',});
+	var id = $(this).data('id');
+	$('#producto')[0].selectedIndex = parseInt($('#crm_productobundle_pedidotype_lineas_'+id+'_producto')[0].selectedIndex);
+	$('#producto').selectmenu("refresh");
+	$('#cantidad').val($('#crm_productobundle_pedidotype_lineas_'+id+'_cantidad').val());
+	modid=id;
+	$('#producto').change();
+});
+$('#btn-add').click(function(e) {
+	$.mobile.changePage($('#linea'), {changeHash:false, transition: 'fade',});
+	$('#producto').change();
+    /*var collectionHolder = $('#crm_productobundle_pedidotype_lineas');
+    var prototype = collectionHolder.attr('data-prototype');
+    var form = prototype.replace(/__name__/g, collectionHolder.children().length);
+
+    collectionHolder.append(form).trigger( "create" );
+
+    return false;*/
+});
+$('.btn-remove').live('click', function(event) {
+    var id = $(this).data('id');
+    $('#crm_productobundle_pedidotype_lineas_'+id).parents(':first').remove();
+    $(this).parents('li:first').remove();
+	calculo();
+    return false;
+});  
+$('#btn-cancel').click(function(){
+	$.mobile.changePage($('#pedido'), {changeHash:false, transition: 'fade',});
+	free();
+}); 
+});
+
+{% endblock %}
+{% block jqmconfig %}<script src="{{ asset('js/jqm-config.js') }}" type="text/javascript"></script>{% endblock %}

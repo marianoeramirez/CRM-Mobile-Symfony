@@ -1,0 +1,55 @@
+{% extends '::movil.html.twig' %}
+{% block header %}
+<h1>Crm Elmor</h1>
+{% endblock %}
+{% block content %}
+<img src="{{ asset('img/portadalogoelmor.png') }}">
+<div id="barChart" class="myChart"></div>
+
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="{{ asset('js/jquery.jqplot.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/plugins/jqplot.dateAxisRenderer.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/plugins/jqplot.barRenderer.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/plugins/jqplot.categoryAxisRenderer.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/plugins/jqplot.cursor.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/plugins/jqplot.highlighter.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/plugins/jqplot.dragable.min.js') }}"></script>
+{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" type="text/css" hrf="{{ asset('css/jquery.jqplot.min.css') }}" />{% endblock %}
+{% block javascripts_e %}
+$(document).ready(function () {
+ 
+  $.jqplot.config.enablePlugins = true;
+ 
+  s1 = [['23-May-12',1200],['24-May-12',1500],['25-May-12',2120],['26-May-12', 1300]];
+ 
+  plot1 = $.jqplot('barChart',[s1],{
+     title: 'Indice de Ventas por dia',
+     axes: {
+         xaxis: {
+             renderer: $.jqplot.DateAxisRenderer,
+             tickOptions: {
+                 formatString: '%#m/%#d/%y'
+             },
+             numberTicks: 4
+         },
+         yaxis: {
+             tickOptions: {
+                 formatString: '%.2f Bs.'
+             }
+         }
+     },
+     highlighter: {
+         sizeAdjust: 8,
+         tooltipLocation: 'n',
+         tooltipAxes: 'y',
+         tooltipFormatString: '<b><i><span style="color:red;">Ventas</span></i></b> %.2f',
+         useAxesFormatters: false
+     },
+     cursor: {
+         show: true
+     }
+  });
+});
+{% endblock %}

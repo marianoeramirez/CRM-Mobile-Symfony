@@ -1,0 +1,93 @@
+{% extends '::movil.html.twig' %}
+{% block header %}
+<h1>Mapa de Clientes</h1>
+{% endblock %}
+{% block page_id %}cmapa{% endblock %}
+{% block content %}
+<div id="map_canvas"></div>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="{{ asset('js/underscore-min.js') }}" type="text/javascript"></script>
+{% endblock %}
+{% block javascripts_e %}
+var p = {{ mapa|json_encode|raw }};
+var d = new Array();
+var bounds = new google.maps.LatLngBounds();
+var service = new google.maps.DistanceMatrixService();
+function initialize() {
+    var myOptions = {
+      zoom: 10,
+      center: new google.maps.LatLng(-25.363882, 131.044922),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+	var map = new google.maps.Map(document.getElementById('map_canvas'),
+        myOptions);
+	var marker = new google.maps.Marker({
+      position: map.getCenter(),
+      map: map,
+	  animation: google.maps.Animation.DROP,
+      title: 'coordinates',
+      clickable: true,
+      icon: 'http://localhost/mpa.png'
+    });
+    var m = [];
+    var i = [];
+		_.each(p,function(e,k){
+			var l = new google.maps.LatLng(parseFloat(p[k]['lat']), parseFloat(p[k]['lng']));
+			d.push(l);
+			
+			m[k] = new google.maps.Marker({
+			  position: l,
+			  map: map,
+			  animation: google.maps.Animation.DROP,
+			  title: 'coordinates'
+			});
+			 i[k] = new google.maps.InfoWindow({
+		        content: "<h3>"+p[k]['nombre']+"</h3>",
+		    });
+			google.maps.event.addListener(m[k], 'click', function() {
+		      i[k].open(map,m[k]);
+		    });
+			bounds.extend(l);
+		});
+		map.fitBounds(bounds);
+		map.setZoom(parseInt(map.getZoom())-1);
+		
+	if(navigator.geolocation) {
+      navigator.geolocation.watchPosition(function(position) {
+        var pos = new google.maps.LatLng(position.coords.latitude,
+                                         position.coords.longitude);
+		marker.setPosition(pos);
+		bounds.extend(pos);
+		map.fitBounds(bounds);
+		map.setZoom(parseInt(map.getZoom())-1);
+		localStorage.setItem('cordenada_'+position.timestamp,JSON.stringify(position));
+		 service.getDistanceMatrix(
+          {
+            origins: [pos],
+            destinations: d,
+            travelMode: google.maps.TravelMode.DRIVING,
+            unitSystem: google.maps.UnitSystem.METRIC,
+            avoidHighways: false,
+            avoidTolls: false
+          }, function(response, status) {
+			if (status != google.maps.DistanceMatrixStatus.OK) {
+			  alert('Error was: ' + status);
+			} else {
+			  var origins = response.originAddresses;
+			  var destinations = response.destinationAddresses;
+				var results = response.rows[0].elements;
+				//addMarker(origins[i], false);
+				for (var j = 0; j < results.length; j++) {
+				  i[j].setContent("<h3>"+p[j]['nombre']+"</h3><p>"+destinations[j]+' '+results[j].distance.text+' '+results[j].duration.text+"</p>");
+				 
+				}
+			}
+			});
+	});
+    }       
+}
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+{% endblock %}

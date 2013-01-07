@@ -1,0 +1,12 @@
+{% extends '::movil.html.twig' %}
+{% block header %}
+<h4>Clientes</h4>
+<a href="{{ path('cliente_new') }}" data-role="button" data-icon="plus" class="ui-btn-right">Nuevo</a>
+{% endblock %}
+{% block content %}
+<ul data-role="listview" data-filter="true">
+{% for entity in entities %}
+<li><a href="{{ path('cliente_edit', { 'id': entity.id }) }}"><b>{{ entity.codigo }}</b> {{ entity.nombre }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

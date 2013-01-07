@@ -1,0 +1,45 @@
+Crm\ProductoBundle\Entity\Cliente:
+    type: entity
+    table: cliente
+    repositoryClass: Crm\ProductoBundle\Entity\ClienteRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        codigo:
+            type: string
+            length: '40'
+        nombre:
+            type: string
+            length: '60'
+        email:
+            type: string
+            length: '80'
+            nullable: true
+        telefono:
+            type: string
+            length: '20'
+            nullable: true
+        celular:
+            type: string
+            length: '20'
+            nullable: true
+        direccion:
+            type: text
+            nullable: true
+        lat:
+            type: string
+            length: '20'
+            nullable: true
+        lng:
+            type: string
+            length: '20'
+            nullable: true
+    oneToMany:
+        pedidos:
+            targetEntity: Pedido
+            mappedBy: cliente
+            cascade: ["persist", "merge"]
+    lifecycleCallbacks: {  }

@@ -1,0 +1,30 @@
+producto:
+    pattern:  /
+    defaults: { _controller: "CrmProductoBundle:Producto:index" }
+
+producto_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "CrmProductoBundle:Producto:show" }
+
+producto_new:
+    pattern:  /new
+    defaults: { _controller: "CrmProductoBundle:Producto:new" }
+
+producto_create:
+    pattern:  /create
+    defaults: { _controller: "CrmProductoBundle:Producto:create" }
+    requirements: { _method: post }
+
+producto_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "CrmProductoBundle:Producto:edit" }
+
+producto_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "CrmProductoBundle:Producto:update" }
+    requirements: { _method: post }
+
+producto_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "CrmProductoBundle:Producto:delete" }
+    requirements: { _method: post }

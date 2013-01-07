@@ -1,0 +1,307 @@
+<?php
+
+namespace Crm\ProductoBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Crm\ProductoBundle\Entity\Cliente
+ */
+class Cliente
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string $codigo
+     */
+    private $codigo;
+
+    /**
+     * @var string $nombre
+     */
+    private $nombre;
+    
+    private $rif;
+    
+    
+
+    /**
+     * @var string $email
+     */
+    private $email;
+
+    /**
+     * @var string $telefono
+     */
+    private $telefono;
+
+    /**
+     * @var string $celular
+     */
+    private $celular;
+
+	
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param string $codigo
+     * @return Cliente
+     */
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+    
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return string 
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Cliente
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Cliente
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     * @return Cliente
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+    
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string 
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set celular
+     *
+     * @param string $celular
+     * @return Cliente
+     */
+    public function setCelular($celular)
+    {
+        $this->celular = $celular;
+    
+        return $this;
+    }
+
+    /**
+     * Get celular
+     *
+     * @return string 
+     */
+    public function getCelular()
+    {
+        return $this->celular;
+    }
+    public function __toString(){
+    	return "$this->codigo $this->nombre";
+    }
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    private $pedidos;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->pedidos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add pedidos
+     *
+     * @param Crm\ProductoBundle\Entity\Pedido $pedidos
+     * @return Cliente
+     */
+    public function addPedido(\Crm\ProductoBundle\Entity\Pedido $pedidos)
+    {
+        $this->pedidos[] = $pedidos;
+    
+        return $this;
+    }
+
+    /**
+     * Remove pedidos
+     *
+     * @param Crm\ProductoBundle\Entity\Pedido $pedidos
+     */
+    public function removePedido(\Crm\ProductoBundle\Entity\Pedido $pedidos)
+    {
+        $this->pedidos->removeElement($pedidos);
+    }
+
+    /**
+     * Get pedidos
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPedidos()
+    {
+        return $this->pedidos;
+    }
+    /**
+     * @var string $direccion
+     */
+    private $direccion;
+
+    /**
+     * @var string $lat
+     */
+    private $lat;
+
+    /**
+     * @var string $lng
+     */
+    private $lng;
+
+
+    /**
+     * Set direccion
+     *
+     * @param string $direccion
+     * @return Cliente
+     */
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+    
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     *
+     * @return string 
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Set lat
+     *
+     * @param string $lat
+     * @return Cliente
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+    
+        return $this;
+    }
+
+    /**
+     * Get lat
+     *
+     * @return string 
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * Set lng
+     *
+     * @param string $lng
+     * @return Cliente
+     */
+    public function setLng($lng)
+    {
+        $this->lng = $lng;
+    
+        return $this;
+    }
+
+    /**
+     * Get lng
+     *
+     * @return string 
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
+}

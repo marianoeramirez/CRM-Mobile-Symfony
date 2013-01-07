@@ -1,0 +1,13 @@
+{% extends '::movil.html.twig' %}
+{% block header %}
+<h4>Pedidos</h4>
+<a href="{{ path('pedido_new') }}" data-role="button" data-icon="plus" class="ui-btn-right">Nuevo</a>
+{% endblock %}
+{% block content %}
+<ul data-role="listview" data-filter="true">
+{% for entity in entities %}
+<li><a href="{{ path('pedido_edit', { 'id': entity.id }) }}"><b>{{ entity.referencia }}</b> {{ entity.cliente }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
+{% block jqmconfig %}<script src="{{ asset('js/jqm-config.js') }}" type="text/javascript"></script>{% endblock %}

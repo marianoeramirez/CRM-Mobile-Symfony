@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>{% block title %}CRM Elmor - OFA{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('css/jquery.mobile.structure-1.2.0.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/jquery.mobile.theme-1.2.0.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
+    </head>
+    <body>
+        {% block body %}
+        	<div data-role="page" id="{% block page_id %}{% endblock %}">
+        		<div data-role="header">
+        		{% block header %}
+        		{% endblock %}
+        		</div>
+        		<div data-role="content">
+        		{% block content %}
+        		{% endblock %}
+        		</div>
+        	
+        	<div data-role="footer" class="nav-glyphish-example" data-theme="c" class="ui-body-c" data-position="fixed">
+			<div data-role="navbar" class="nav-glyphish-example" data-grid="d"  data-theme="c">
+			<ul data-theme="c">
+				<li><a href="{{ path('crm_producto_homepage') }}" id="btn-home" data-icon="custom" data-ajax="false">Home</a></li>
+				<li><a href="{{ path('producto') }}" id="btn-producto" data-icon="custom" data-ajax="false">Productos</a></li>
+				<li><a href="{{ path('pedido') }}" id="btn-pedido" data-icon="custom" data-ajax="false">Pedidos</a></li>
+				<li><a href="{{ path('cliente') }}" id="btn-cliente" data-icon="custom" data-ajax="false">Clientes</a></li>
+				<li><a href="{{ path('crm_producto_mapa') }}" id="btn-ubicacion" data-icon="custom" data-ajax="false">Ubicación</a></li>
+			</ul>
+			</div>
+			</div>
+		</div>
+        {% endblock %}
+	</div>
+        {% block extra %}{% endblock %}
+        <script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
+		{% block jqmconfig %}{% endblock %}
+        <script src="{{ asset('js/jquery.mobile.min.js') }}" type="text/javascript"></script>
+        {% block javascripts %}{% endblock %}
+        <script type="text/javascript">
+        function hideAddressBar()
+{
+  if(!window.location.hash)
+  {
+      if(document.height < window.outerHeight)
+      {
+          document.body.style.height = (window.outerHeight + 50) + 'px';
+      }
+
+      setTimeout( function(){ window.scrollTo(0, 1); }, 100 );
+  }
+}
+
+window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
+window.addEventListener("orientationchange", hideAddressBar );
+        {% block javascripts_e %}{% endblock %}
+        </script>
+    </body>
+</html>

@@ -1,0 +1,6 @@
+#Acme/TaskBundle/Resources/config/validation.yml
+#Acme\TaskBundle\Entity\Producto:
+#    properties:
+#        laboratorio:
+#			Choice: { choices: [ELM, OFA], message: Choose a valid gender. }
+

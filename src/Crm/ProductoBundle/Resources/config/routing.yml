@@ -1,0 +1,22 @@
+crm_producto_homepage:
+    pattern:  /
+    defaults: { _controller: CrmProductoBundle:Default:index }
+
+crm_producto_mapa:
+    pattern:  /mapa
+    defaults: { _controller: CrmProductoBundle:Default:mapa }
+
+CrmProductoBundle_producto:
+    resource: "@CrmProductoBundle/Resources/config/routing/producto.yml"
+    prefix:   /producto
+
+CrmProductoBundle_pedido:
+    resource: "@CrmProductoBundle/Resources/config/routing/pedido.yml"
+    prefix:   /pedido
+    
+CrmProductoBundle_cliente:
+    resource: "@CrmProductoBundle/Resources/config/routing/cliente.yml"
+    prefix:   /cliente
+
+
+

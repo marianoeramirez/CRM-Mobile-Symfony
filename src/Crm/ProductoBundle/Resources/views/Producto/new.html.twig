@@ -1,0 +1,13 @@
+{% extends '::movil.html.twig' %}
+{% block header %}
+<h1>Crear Producto</h1>
+<a href="{{ path('producto') }}" data-role="button" data-icon="back" class="ui-btn-right" data-iconpos="notext"></a>
+{% endblock %}
+{% block content %}
+<form action="{{ path('producto_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Crear</button>
+    </p>
+</form>
+{% endblock %}

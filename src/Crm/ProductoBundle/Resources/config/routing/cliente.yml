@@ -1,0 +1,30 @@
+cliente:
+    pattern:  /
+    defaults: { _controller: "CrmProductoBundle:Cliente:index" }
+
+cliente_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "CrmProductoBundle:Cliente:show" }
+
+cliente_new:
+    pattern:  /new
+    defaults: { _controller: "CrmProductoBundle:Cliente:new" }
+
+cliente_create:
+    pattern:  /create
+    defaults: { _controller: "CrmProductoBundle:Cliente:create" }
+    requirements: { _method: post }
+
+cliente_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "CrmProductoBundle:Cliente:edit" }
+
+cliente_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "CrmProductoBundle:Cliente:update" }
+    requirements: { _method: post }
+
+cliente_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "CrmProductoBundle:Cliente:delete" }
+    requirements: { _method: post }

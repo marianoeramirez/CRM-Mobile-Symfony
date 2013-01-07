@@ -1,0 +1,11 @@
+.nav-glyphish-example .ui-btn .ui-btn-inner { padding-top: 40px !important; }
+.nav-glyphish-example .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
+#btn-pedido .ui-icon { background:  url(images/icons/35-shopping.png) 50% 50% no-repeat; background-size: 24px 22px; }
+#btn-producto .ui-icon { background:  url(images/icons/195-barcode.png) 50% 50% no-repeat; background-size: 24px 16px;  }
+#btn-cliente .ui-icon { background:  url(images/icons/112-group.png) 50% 50% no-repeat;  background-size: 32px 21px; }
+#btn-ubicacion .ui-icon { background:  url(images/icons/07-map-marker.png) 50% 50% no-repeat;  background-size: 16px 26px; }
+#btn-home .ui-icon { background:  url(images/icons/53-house.png) 50% 50% no-repeat;  background-size: 22px 22px; }
+.ui-footer {position:absolute !important;bottom:0px}
+#map_canvas{width:100%;height:100%; position: absolute;}
+#cmapa .ui-content{padding:0;}
+#barChart{width: 300px; height:200px;}

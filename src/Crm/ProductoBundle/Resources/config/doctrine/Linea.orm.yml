@@ -1,0 +1,30 @@
+Crm\ProductoBundle\Entity\Linea:
+    type: entity
+    table: linea
+    repositoryClass: Crm\ProductoBundle\Entity\LineaRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        cantidad:
+            type: integer
+    manyToOne:
+        pedido:
+            field: Pedido
+            targetEntity: Pedido
+            cascade: {}
+            inversedBy: lineas
+            joinColumns:
+                pedido_id:
+                    referencedColumnName: id
+        producto:
+            field: Producto
+            targetEntity: Producto
+            cascade: {}
+            inversedBy: lineas
+            joinColumns:
+                producto_id:
+                    referencedColumnName: id
+    lifecycleCallbacks: {  }

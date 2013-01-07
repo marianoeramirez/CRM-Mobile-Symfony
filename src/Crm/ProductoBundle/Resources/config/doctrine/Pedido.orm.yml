@@ -1,0 +1,34 @@
+Crm\ProductoBundle\Entity\Pedido:
+    type: entity
+    table: pedido
+    repositoryClass: Crm\ProductoBundle\Entity\PedidoRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        referencia:
+            type: string
+            length: '15'
+        drogueria:
+            type: string
+            length: '5'
+        laboratorio:
+            type: string
+            length: '3'
+    manyToOne:
+        cliente:
+            field: Cliente
+            targetEntity: Cliente
+            cascade: {}
+            inversedBy: pedidos
+            joinColumns:
+                cliente_id:
+                    referencedColumnName: id
+    oneToMany:
+        lineas:
+            targetEntity: Linea
+            mappedBy: pedido
+            cascade: ["persist", "merge"]
+    lifecycleCallbacks: {  }
